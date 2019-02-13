@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Hadoop
-parent: Big Data
+title: Test
+parent: Hadoop
 nav_order: 1
 ---
