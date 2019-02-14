@@ -1,12 +1,12 @@
 ---
 layout: default
-title: Spark Memory Management
-parent: Apache Spark
-grand_parent: Big Data
+title: Memory Management
+parent: Tuning Spark
+grand_parent: Apache Spark
 nav_order: 1
 ---
 
-## Task Memory Management
+## Memory Management
 Tasks are the basically the threads that run within the Executor JVM of a Worker node to do the needed computation. It is the smallest unit of execution that operates on a partition in our dataset. Given that Spark is an in-memory processing engine where all of the computation that a task does happens in-memory, its important to understand `Task Memory Management...`
 
 To understand this topic better, we'll section `Task Memory Management` into 3 parts:
