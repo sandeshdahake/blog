@@ -6,20 +6,27 @@ grand_parent: Big Data
 nav_order: 2
 ---
 
-## Memory Management
+# Memory Management
+{: .fs-9 }
 Tasks are the basically the threads that run within the Executor JVM of a Worker node to do the needed computation. It is the smallest unit of execution that operates on a partition in our dataset. Given that Spark is an in-memory processing engine where all of the computation that a task does happens in-memory, its important to understand `Task Memory Management...`
 
 To understand this topic better, we'll section `Task Memory Management` into 3 parts:
-1. **What are the memory needs of a task?**
-2. **Memory Management within a Task -** How does spark arbitrate memory within a task?
-3. **Memory Management across the Tasks -** How is memory shared among different tasks running on the same worker node?
+1. What are the memory needs of a task?
+{: .label .label-blue }
+2. Memory Management within a Task
+{: .label .label-green }
+3. Memory Management across the Tasks
+{: .label .label-purple }
 
-### 1. What are the memory needs of a task?
+
+## 1. What are the memory needs of a task?
 Every task needs 2 kinds of memory: 
+
 1. **Execution Memory:** 
   - Execution Memory is the memory used to buffer Intermediate results.
   - As soon as we are done with the operation, we can go ahead and release it. Its short lived.
   - For example, a task performing Sort operation, would need some sort of collection to store the Intermediate sorted values.
+
 2. **Storage Memory:** 
   - Storage memory is more about reusing the data for future computation. 
   - This is where we store cached data and its long-lived. 
@@ -32,7 +39,8 @@ Every task needs 2 kinds of memory:
 
 Now that we've seen the memory needs of a task, Let's understand how Spark manages it..
 
-### 2. Memory Management within a Task
+
+## 2. Memory Management within a Task
 **How does Spark arbitrate between ExecutionMemory(EM) and StorageMemory(SM) within a Task?**
 
 Simplest Solution – **Static Assignment**
@@ -40,8 +48,11 @@ Simplest Solution – **Static Assignment**
 - As the name says, this memory split is static and doesn't change dynamically. 
 - This has been the solution since spark 1.0. 
 - While running our task, if the execution memory gets filled, it’ll get spilled to disk as shown below:
+
 ![image](https://sandeshdahake.github.io/blog/assets/images/spark/memory-managment/spark-memory-managment-2.png)
+
 - Likewise, if the Storage memory gets filled, its evicted via LRU (Least recently Used)
+
 ![image](https://sandeshdahake.github.io/blog/assets/images/spark/memory-managment/spark-memory-managment-3.png)
 
 **Disadvantage:** Because of the hard split of memory between Execution and Storage, even if the task doesn't need any StorageMemory, ExecutionMemory will still be using only its chunk of the total available free memory..
@@ -67,7 +78,9 @@ Spilled execution data is always going to be read back from disk where as cached
 
 We can't just blow away cached data like that in this case. So, for this usecase, spark allows user to specify minimal unevictable amount of storage a.k.a cache data. Notice this is not a reservation meaning, we don’t pre-allocate a chunk of storage for cache data such that execution cannot borrow from it. Rather, only when there’s cached data this value comes into effect..
 
-### 3.Memory Management across the Tasks
+
+
+## 3.Memory Management across the Tasks
 **How is memory shared among different tasks running on the same worker node?**
 
 Ans: **Static Assignment (again!!)** - No matter how many tasks are currently running, if the worker machine has 4 cores, we’ll have 4 fixed slots.
@@ -99,7 +112,6 @@ This has been there since spark 1.0 and its been working fine since then. So, Sp
 - Static assignment is simpler
 - Dynamic allocation handles stragglers better
 
-[My HomePage](https://spoddutur.github.io/spark-notes/)
 
 ## References:
 - [Deep dive Apache Spark Memory Mangement](https://spark-summit.org/2016/events/deep-dive-apache-spark-memory-management/)
