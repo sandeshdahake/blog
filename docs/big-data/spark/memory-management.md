@@ -4,6 +4,7 @@ title: Memory Management
 parent: Apache Spark
 grand_parent: Big Data
 nav_order: 2
+date: 2019-02-01
 ---
 
 # Memory Management
@@ -12,13 +13,14 @@ Tasks are the basically the threads that run within the Executor JVM of a Worker
 
 To understand this topic better, we'll section `Task Memory Management` into 3 parts:
 1. What are the memory needs of a task?
+{: .label .label-blue }
 2. Memory Management within a Task
+{: .label .label-green }
 3. Memory Management across the Tasks
-
+{: .label .label-purple }
 
 
 ## 1. What are the memory needs of a task?
-{: .label .label-blue }
 Every task needs 2 kinds of memory: 
 
 1. **Execution Memory:** 
@@ -40,7 +42,6 @@ Now that we've seen the memory needs of a task, Let's understand how Spark manag
 
 
 ## 2. Memory Management within a Task
-{: .label .label-green }
 **How does Spark arbitrate between ExecutionMemory(EM) and StorageMemory(SM) within a Task?**
 
 Simplest Solution – **Static Assignment**
@@ -81,7 +82,6 @@ We can't just blow away cached data like that in this case. So, for this usecase
 
 
 ## 3.Memory Management across the Tasks
-{: .label .label-purple }
 **How is memory shared among different tasks running on the same worker node?**
 
 Ans: **Static Assignment (again!!)** - No matter how many tasks are currently running, if the worker machine has 4 cores, we’ll have 4 fixed slots.
