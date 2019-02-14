@@ -1,10 +1,9 @@
 ---
 layout: default
 title: Memory Management
-parent: Tuning Spark
-grand_parent: Apache Spark
-great_grand_parent: Big Data
-nav_order: 1
+parent: Apache Spark
+grand_parent: Big Data
+nav_order: 2
 ---
 
 ## Memory Management
