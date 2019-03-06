@@ -21,9 +21,7 @@ This is my attempt to collect good reads/articles/topics in documentation style.
 
 <div class="container">
   <form method="POST" action="https://formspree.io/sandeshdahake@gmail.com">
-    <label for="email">Email</label>
     <input type="email" id="email" name="email" placeholder="Your email">
-    <label for="message">Message</label>
     <textarea name="message" id="message" placeholder="Comments/Suggestion"></textarea>
     <button type="submit">Submit</button>
   </form>
