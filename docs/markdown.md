@@ -69,11 +69,11 @@ Output
 
 ### Task list
 
-<div class="code-example" markdown="1">
+```
 - [ ] hello, this is a todo item
 - [ ] hello, this is another todo item
 - [x] goodbye, this item is done
-</div>
+```
 
 Output 
 
@@ -151,17 +151,28 @@ Output
 
  ## 10.Tables 
 
-    |First Header  | Second Header|
-    |‐‐‐‐‐‐‐‐‐‐‐‐‐ | ‐‐‐‐‐‐‐‐‐‐‐‐‐|
-    |Content Cell  | Content Cell|
-    |Content Cell  | Content Cell|
 
-Output  
+````
+| head1        | head two          | three |
+|:-------------|:------------------|------:|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
 
-First Header  | Second Header
-‐‐-‐‐‐‐‐‐‐‐‐‐ | ‐‐‐‐‐‐‐‐‐‐‐‐‐ 
-Content Cell  | Content Cell
-Content Cell  | Content Cell
+:- left align
+:-: center align
+-: right align 
+````
+  
+Output
+
+| head1        | head two          | three |
+|:-------------|:------------------|:------|
+| ok           | good swedish fish | nice  |
+| out of stock | good and plenty   | nice  |
+| ok           | good `oreos`      | hmm   |
+| ok           | good `zoute` drop | yumm  |
 
 
 ## 11. Horizontal Rule
