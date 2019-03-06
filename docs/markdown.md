@@ -67,6 +67,20 @@ Output
    * Item 3a
    * Item 3b
 
+### Task list
+
+<div class="code-example" markdown="1">
+- [ ] hello, this is a todo item
+- [ ] hello, this is another todo item
+- [x] goodbye, this item is done
+</div>
+
+Output 
+
+- [ ] hello, this is a todo item
+- [ ] hello, this is another todo item
+- [x] goodbye, this item is done
+
 ## 4. Manual Line Breaks 
 
      i will add 2 spaces after this <two space + enter > 
