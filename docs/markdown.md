@@ -152,17 +152,19 @@ Content Cell  | Content Cell
 
 ## 11. Horizontal Rule
 
-Three or more asterisks or underscores  
+Three or more asterisks or dashes  
 
     ****
      or 
-    ____  
+    ------  
 
 Output
 
 **** 
 or
-_______
+
+-------
+
 
 ## 12. Miscellaneous
     superscript^2
