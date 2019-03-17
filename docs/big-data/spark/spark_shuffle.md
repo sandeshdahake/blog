@@ -26,7 +26,7 @@ we will divide this topic in below sections
 
 
 
-## Why Shuffling {: .label .label-blue }
+## Why Shuffling 
 
 ### Partitioning
 
@@ -97,6 +97,7 @@ Shuffling in general has 2 important compression parameters
 
 ## Types of Shuffle (spark.shuffle.manager)
 
+#### Hash Shuffle 
 * Prior to Spark 1.2.0 this was the default option of shuffle (spark.shuffle.manager = hash)
 * Major drawback is number of output files 
 * Each mapper task creates `separate file` for `each separate reducer` \
@@ -124,12 +125,12 @@ There is an optimization implemented for this shuffler, controlled by the parame
 
 ![image](https://sandeshdahake.github.io/blog/assets/images/spark/shuffle/spark_hash_shuffle_with_consolidation-1024x500.png)
 
-### Pros:
+#### Pros:
 
 * Fast – no sorting is required at all, no hash table maintained;
 * No memory overhead for sorting the data;
 * No IO overhead – data is written to HDD exactly once and read exactly once.
-### Cons:
+#### Cons:
 
 * When the amount of partitions is big, performance starts to degrade due to big amount of output files
 * Big amount of files written to the filesystem causes IO skew towards random IO, which is in general up to 100x slower than sequential IO
@@ -140,7 +141,7 @@ increase this size, your reducers would request the data from “map” task out
 
 ````
 
-## Sort Shuffle  (spark.shuffle.manager = sort)
+### Sort Shuffle  (spark.shuffle.manager = sort)
 
 * shuffle logic similar to the one used by Hadoop MapReduce
 * output a single file ordered by “reducer” id and indexed
@@ -177,16 +178,16 @@ JVM Heap Size * 0.2 * 0.8
 7. Each spill file is written to the disk separately, their merging is performed only when the data is requested by “reducer” and the merging is real-time, i.e. it does not call somewhat “on-disk merger” like it happens in Hadoop MapReduce,
 8.  just dynamically collects the data from a number of separate spill files and merges them together using Min Heap implemented by Java PriorityQueue class.
 
-### Pros:
+#### Pros:
 
 Smaller amount of files created on “map” side
 Smaller amount of random IO operations, mostly sequential writes and reads
-### Cons:
+#### Cons:
 
 Sorting is slower than hashing. It might worth tuning the bypassMergeThreshold parameter for your own cluster to find a sweet spot, but in general for most of the clusters it is even too high with its default
 In case you use SSD drives for the temporary data of Spark shuffles, hash shuffle might work better for you
 
-## Unsafe Shuffle or Tungsten Sort (spark.shuffle.manager = tungsten-sort)
+### Unsafe Shuffle or Tungsten Sort (spark.shuffle.manager = tungsten-sort)
 
 * This is the part of project `Tungsten`.
 
@@ -207,12 +208,16 @@ This shuffle implementation would be used only when all of the following conditi
 
 ![image](https://sandeshdahake.github.io/blog/assets/images/spark/shuffle/spark_tungsten_sort_shuffle-1024x457.png)
 
-## Pros:
+#### Pros:
 
 Many performance optimizations described above
-## Cons:
+#### Cons:
 
 Not yet handling data ordering on mapper side
 Not yet offer off-heap sorting buffer
 Not yet stable
 
+## References:
+
+- [spark-architecture-shuffle](https://0x0fff.com/spark-architecture-shuffle/)
+- [apache-spark-performance](https://blog.scottlogic.com/2018/03/22/apache-spark-performance.html)
